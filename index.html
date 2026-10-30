@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Confidentialit&eacute; &mdash; GameVote</title>
+<meta name="description" content="Ce que GameVote collecte, pourquoi, o&ugrave; vont les donn&eacute;es et comment les supprimer.">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #ffffff; --fg: #1a1a1f; --muted: #5c6066;
+    --line: #e3e4e8; --raised: #f6f7f9; --accent: #2563eb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b0b0e; --fg: #f3f4f6; --muted: #9aa0a8;
+      --line: #2a2a33; --raised: #16161b; --accent: #7aa2f7;
+    }
+  }
+  * { box-sizing: border-box }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.65 -apple-system, "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  main { max-width: 760px; margin: 0 auto; padding: 56px 16px 96px }
+  h1 { font-size: 30px; font-weight: 650; letter-spacing: -.02em; margin: 0 0 6px }
+  h2 { font-size: 20px; font-weight: 620; letter-spacing: -.012em; margin: 44px 0 10px }
+  h3 { font-size: 16px; font-weight: 620; margin: 28px 0 8px }
+  .lead { color: var(--muted); margin: 0 0 8px }
+  .date { color: var(--muted); font-size: 14px; margin: 0 0 32px }
+  a { color: var(--accent) }
+  code {
+    background: var(--raised); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1px 5px; font-size: .875em;
+  }
+  table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 15px }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top }
+  th { font-weight: 620; color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: .03em }
+  .note {
+    background: var(--raised); border: 1px solid var(--line);
+    border-left: 3px solid var(--accent); border-radius: 8px;
+    padding: 14px 16px; margin: 20px 0;
+  }
+  .note p { margin: 0 }
+  .todo { border-left-color: #d97706 }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 64px 0 48px }
+  footer { color: var(--muted); font-size: 14px; margin-top: 48px }
+  @media (max-width: 560px) {
+    main { padding: 36px 16px 72px }
+    h1 { font-size: 25px }
+    table { font-size: 14px }
+    th, td { padding: 8px 8px }
+  }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Politique de confidentialit&eacute;</h1>
+<p class="lead">GameVote &mdash; &eacute;galement distribu&eacute; sous le nom GameBots.</p>
+<p class="date">Derni&egrave;re mise &agrave; jour&nbsp;: 30 octobre 2026. Le fran&ccedil;ais fait foi&nbsp;; an English version follows.</p>
+
+<p>GameVote est une application Windows qui tient la liste de tes votes
+quotidiens sur des serveurs Minecraft, leur ordre et leurs d&eacute;lais de
+24&nbsp;heures.</p>
+
+<p>Ce document dit ce qui est collect&eacute;, pourquoi, o&ugrave; &ccedil;a va
+et comment t&rsquo;en d&eacute;barrasser. Il d&eacute;crit l&rsquo;application
+telle qu&rsquo;elle est r&eacute;ellement construite.</p>
+
+<h2>Responsable du traitement</h2>
+<p>William Bechay, particulier, France.</p>
+
+<div class="note todo">
+<p><strong>Contact&nbsp;:</strong> adresse &agrave; renseigner avant la
+soumission au Microsoft Store.</p>
+</div>
+
+<h2>Ce qui ne quitte jamais ta machine</h2>
+
+<h3>Tes identifiants de jeu</h3>
+<p>C&rsquo;est le point le plus important de ce document, et c&rsquo;est une
+d&eacute;cision d&rsquo;architecture, pas une promesse.</p>
+<p>Les mots de passe que tu saisis pour un portail de r&eacute;compenses sont
+chiffr&eacute;s par Windows (<code>safeStorage</code>, qui s&rsquo;appuie sur
+DPAPI) et stock&eacute;s dans un fichier local. Ils ne sont envoy&eacute;s
+nulle part&nbsp;: <strong>le serveur n&rsquo;a aucune colonne pour les
+recevoir</strong>, le format des adaptateurs ne peut pas les transporter, et
+aucun canal interne de l&rsquo;application ne permet de relire une valeur
+&mdash; il est possible d&rsquo;&eacute;crire un identifiant et de demander
+<em>lesquels</em> sont renseign&eacute;s, jamais d&rsquo;en obtenir un.</p>
+<p>Si le syst&egrave;me d&rsquo;exploitation ne peut pas chiffrer,
+l&rsquo;application <strong>refuse d&rsquo;enregistrer</strong> et te le dit,
+plut&ocirc;t que d&rsquo;&eacute;crire un mot de passe en clair.</p>
+
+<h3>Tes r&eacute;glages locaux</h3>
+<p>Position et taille du minuteur, mise en pause, lancement au
+d&eacute;marrage&nbsp;: tout cela reste dans un fichier sur ta machine.</p>
+
+<h2>Ce qui est envoy&eacute; au serveur</h2>
+<table>
+<thead><tr><th>Donn&eacute;e</th><th>Pourquoi</th></tr></thead>
+<tbody>
+<tr><td>Ton adresse e-mail et ton mot de passe (hach&eacute;)</td><td>Cr&eacute;er ton compte et t&rsquo;y reconnecter</td></tr>
+<tr><td>Ton nom affich&eacute;</td><td>T&rsquo;identifier dans l&rsquo;interface</td></tr>
+<tr><td>Ton pseudo de jeu</td><td>Il est copi&eacute; dans le champ des pages de vote</td></tr>
+<tr><td>L&rsquo;historique de tes votes (quel site, quand)</td><td>Calculer quand le prochain vote est possible</td></tr>
+<tr><td>Un identifiant d&rsquo;appareil, son nom, sa plateforme et la version de l&rsquo;app</td><td>Compter les appareils autoris&eacute;s par ta licence</td></tr>
+<tr><td>Ta licence (niveau, statut, &eacute;ch&eacute;ance)</td><td>Savoir si tu as acc&egrave;s aux fonctions Pro</td></tr>
+<tr><td>Tes achats (produit, montant, r&eacute;f&eacute;rence Stripe)</td><td>Te livrer ce que tu as pay&eacute; et r&eacute;pondre en cas de litige</td></tr>
+<tr><td>Le d&eacute;roul&eacute; des collectes automatiques (jeu, statut, code d&rsquo;erreur)</td><td>Te montrer ce qui a &eacute;chou&eacute; et pourquoi</td></tr>
+<tr><td>Tes participations au tirage</td><td>Savoir qui a gagn&eacute; et verser le lot</td></tr>
+</tbody>
+</table>
+
+<p><strong>Si tu te connectes avec Google</strong>, Google nous transmet ton
+adresse e-mail et ton nom. Rien d&rsquo;autre&nbsp;: les seules autorisations
+demand&eacute;es sont <code>email</code>, <code>profile</code> et
+<code>openid</code>. Ton mot de passe Google ne passe jamais par
+l&rsquo;application &mdash; la connexion s&rsquo;ouvre dans ton vrai
+navigateur, pr&eacute;cis&eacute;ment pour que l&rsquo;application ne puisse
+pas le voir.</p>
+
+<h2>Ce qui n&rsquo;est pas collect&eacute;</h2>
+<ul>
+<li><strong>Aucune t&eacute;l&eacute;m&eacute;trie, aucune analyse
+d&rsquo;usage, aucun traceur publicitaire.</strong> L&rsquo;application
+n&rsquo;envoie pas de statistiques sur ce que tu fais.</li>
+<li><strong>Aucun num&eacute;ro de carte bancaire.</strong> Le paiement se
+fait sur une page h&eacute;berg&eacute;e par Stripe. L&rsquo;application
+re&ccedil;oit seulement une r&eacute;f&eacute;rence de transaction.</li>
+<li><strong>Aucun identifiant de jeu</strong>, comme expliqu&eacute; plus
+haut.</li>
+</ul>
+
+<h2>O&ugrave; tes donn&eacute;es sont stock&eacute;es</h2>
+<p>La base de donn&eacute;es et l&rsquo;authentification sont
+h&eacute;berg&eacute;es par <strong>Supabase</strong>, dans la r&eacute;gion
+<code>us-east-1</code> &mdash; <strong>aux &Eacute;tats-Unis</strong>.</p>
+<p>Si tu es dans l&rsquo;Union europ&eacute;enne, cela signifie que tes
+donn&eacute;es sont transf&eacute;r&eacute;es hors de l&rsquo;UE. Supabase
+intervient comme sous-traitant et encadre ces transferts par les clauses
+contractuelles types de la Commission europ&eacute;enne. Tu as le droit de le
+savoir avant de cr&eacute;er un compte, et c&rsquo;est pourquoi c&rsquo;est
+&eacute;crit ici plut&ocirc;t qu&rsquo;en note de bas de page.</p>
+
+<h2>Les services tiers utilis&eacute;s</h2>
+<table>
+<thead><tr><th>Service</th><th>Ce qu&rsquo;il voit</th><th>Pourquoi</th></tr></thead>
+<tbody>
+<tr><td>Supabase</td><td>Toutes les donn&eacute;es du tableau ci-dessus</td><td>Base de donn&eacute;es et comptes</td></tr>
+<tr><td>Stripe</td><td>Ton e-mail et ton moyen de paiement</td><td>Encaisser un paiement</td></tr>
+<tr><td>Google</td><td>Que tu t&rsquo;es connect&eacute; &agrave; GameVote</td><td>Connexion par compte Google, si tu la choisis</td></tr>
+<tr><td>GitHub</td><td>Ton adresse IP, lors d&rsquo;une recherche de mise &agrave; jour</td><td>T&eacute;l&eacute;charger les mises &agrave; jour</td></tr>
+<tr><td>Microsoft</td><td>Ton installation, si tu passes par le Store</td><td>Distribution et mises &agrave; jour via le Microsoft Store</td></tr>
+<tr><td>Les sites de vote</td><td>Ton pseudo et ton adresse IP, quand tu votes</td><td>C&rsquo;est le vote lui-m&ecirc;me</td></tr>
+</tbody>
+</table>
+
+<div class="note">
+<p><strong>C&rsquo;est toi qui votes.</strong> L&rsquo;application ouvre la
+page dans ton navigateur et met ton pseudo dans le presse-papier. Elle ne
+remplit pas le formulaire &agrave; ta place, ne valide rien, et ne contourne
+aucun contr&ocirc;le anti-robot. Ta relation avec ces sites est directe.</p>
+</div>
+
+<h2>Combien de temps c&rsquo;est conserv&eacute;</h2>
+<p>Tant que ton compte existe. L&rsquo;historique des votes est
+conserv&eacute; parce qu&rsquo;il sert &agrave; calculer les
+d&eacute;lais&nbsp;; il n&rsquo;a pas d&rsquo;autre usage. Les
+enregistrements li&eacute;s &agrave; un paiement sont conserv&eacute;s plus
+longtemps, le temps impos&eacute; par les obligations comptables.</p>
+
+<h2>Tes droits</h2>
+<p>Tu peux demander &agrave; consulter tes donn&eacute;es, &agrave; les
+corriger, &agrave; les exporter ou &agrave; <strong>tout supprimer</strong>, y
+compris ton compte. &Eacute;cris &agrave; l&rsquo;adresse de contact
+ci-dessus&nbsp;; la demande est trait&eacute;e dans un d&eacute;lai d&rsquo;un
+mois.</p>
+<p>Supprimer ton compte supprime les lignes qui t&rsquo;appartiennent. Les
+identifiants de jeu, eux, n&rsquo;ont jamais &eacute;t&eacute; chez
+nous&nbsp;: ils disparaissent quand tu d&eacute;sinstalles l&rsquo;application
+et supprimes son dossier de donn&eacute;es.</p>
+<p>Si tu estimes que tes droits ne sont pas respect&eacute;s, tu peux saisir
+la CNIL (<a href="https://www.cnil.fr">cnil.fr</a>).</p>
+
+<h2>Mineurs</h2>
+<p>L&rsquo;application n&rsquo;est pas destin&eacute;e aux enfants de moins de
+13 ans et aucune donn&eacute;e n&rsquo;est collect&eacute;e sciemment
+&agrave; leur sujet.</p>
+
+<h2>Modifications</h2>
+<p>Toute modification de ce document est publi&eacute;e ici, avec sa date.</p>
+
+<hr>
+
+<h1>Privacy Policy</h1>
+<p class="lead">GameVote &mdash; also distributed as GameBots.</p>
+<p class="date">Last updated: 30 October 2026. The French version above is
+authoritative; this is a translation.</p>
+
+<p>GameVote is a Windows app that keeps track of your daily Minecraft server
+votes, their order and their 24-hour cooldowns.</p>
+
+<h2>Who is responsible</h2>
+<p>William Bechay, an individual, in France. Contact address to be added
+before submission.</p>
+
+<h2>What never leaves your machine</h2>
+<p><strong>Your game credentials.</strong> This is the most important line
+here, and it is an architectural decision rather than a promise. Passwords you
+enter for a reward portal are encrypted by Windows (<code>safeStorage</code>,
+which uses DPAPI) and kept in a local file. They are sent nowhere:
+<strong>the server has no column to receive them</strong>, the adapter format
+cannot carry them, and no internal channel can read one back &mdash; a
+credential can be written, and the app can be asked <em>which</em> keys are
+set, never for a value. If the operating system cannot encrypt, the app
+<strong>refuses to store</strong> and says so, rather than writing a plaintext
+password.</p>
+<p><strong>Your local settings.</strong> Timer position and size, pause state,
+launch at login: all of it stays in a file on your machine.</p>
+
+<h2>What is sent to the server</h2>
+<p>Your email address and hashed password; your display name; your in-game
+username (it is copied into the vote pages&rsquo; field); your vote history
+(which site, when); a device identifier with the device name, platform and app
+version, used to count the devices your licence allows; your licence tier and
+status; your purchases (product, amount, Stripe reference); the outcome of
+automatic claim runs (game, status, error code); and your draw entries.</p>
+<p><strong>If you sign in with Google</strong>, Google passes us your email
+address and name. Nothing else &mdash; the only scopes requested are
+<code>email</code>, <code>profile</code> and <code>openid</code>. Your Google
+password never passes through the app: sign-in opens in your real browser
+precisely so that the app cannot see it.</p>
+
+<h2>What is not collected</h2>
+<ul>
+<li><strong>No telemetry, no usage analytics, no advertising trackers.</strong></li>
+<li><strong>No card numbers.</strong> Payment happens on a page hosted by
+Stripe; the app only receives a transaction reference.</li>
+<li><strong>No game credentials</strong>, as above.</li>
+</ul>
+
+<h2>Where your data is stored</h2>
+<p>The database and authentication are hosted by <strong>Supabase</strong> in
+the <code>us-east-1</code> region &mdash; <strong>in the United
+States</strong>. If you are in the European Union, your data is therefore
+transferred outside the EU. Supabase acts as a processor and covers those
+transfers with the European Commission&rsquo;s standard contractual
+clauses.</p>
+
+<h2>Third-party services</h2>
+<p><strong>Supabase</strong> (database and accounts) sees everything listed
+above. <strong>Stripe</strong> sees your email and payment method.
+<strong>Google</strong> sees that you signed in to GameVote, if you choose
+that. <strong>GitHub</strong> sees your IP address when the app checks for an
+update. <strong>Microsoft</strong> handles distribution if you installed from
+the Store. <strong>The vote sites</strong> see your username and IP address
+when you vote.</p>
+
+<div class="note">
+<p><strong>You do the voting.</strong> The app opens the page in your browser
+and puts your username on the clipboard. It does not fill the form for you,
+does not submit anything, and does not get past any bot check. Your
+relationship with those sites is direct.</p>
+</div>
+
+<h2>How long it is kept</h2>
+<p>For as long as your account exists. Vote history is kept because it is what
+the cooldowns are calculated from; it has no other use. Payment records are
+kept longer, for as long as accounting obligations require.</p>
+
+<h2>Your rights</h2>
+<p>You can ask to see your data, correct it, export it, or <strong>delete all
+of it</strong>, your account included. Write to the contact address above;
+requests are answered within one month.</p>
+<p>Deleting your account removes the rows that belong to you. Game credentials
+were never with us: they go when you uninstall the app and delete its data
+folder.</p>
+<p>If you believe your rights are not being respected, you can complain to the
+CNIL (<a href="https://www.cnil.fr">cnil.fr</a>).</p>
+
+<h2>Children</h2>
+<p>The app is not intended for children under 13 and no data is knowingly
+collected about them.</p>
+
+<h2>Changes</h2>
+<p>Any change to this document is published here with its date.</p>
+
+<footer>GameVote &mdash; William Bechay</footer>
+
+</main>
+</body>
+</html>
